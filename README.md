@@ -93,4 +93,5 @@ docker run -p 8501:8501 pdf_rag_app
 MIT License
 
 Author
-Abhishek Jain
+Siddharth Singh
+www.nomadicsid.com

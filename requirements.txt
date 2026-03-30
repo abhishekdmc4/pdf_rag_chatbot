@@ -1,0 +1,10 @@
+streamlit
+langchain
+langchain-community
+openai
+duckduckgo-search
+ctransformers
+wikipedia
+tiktoken
+faiss-cpu
+pypdf
