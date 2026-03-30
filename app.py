@@ -17,7 +17,7 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 ##from langchain.chat_models import ChatOpenAI
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS  
 from langchain.document_loaders import PyPDFLoader,TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
