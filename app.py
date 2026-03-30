@@ -7,7 +7,8 @@
 import streamlit as st
 import os
 import time
-from langchain.llms import OpenAI
+## from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 import openai
 from langchain.agents import load_tools,initialize_agent,AgentType,create_react_agent
