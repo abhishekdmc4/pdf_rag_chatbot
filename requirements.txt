@@ -9,3 +9,6 @@ tiktoken
 faiss-cpu
 pypdf
 langchain-core
+langchain>=0.2.0
+langchain-openai
+langchain-core
