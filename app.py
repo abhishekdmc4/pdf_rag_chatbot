@@ -12,7 +12,8 @@ from langchain_community.llms import OpenAI
 ##from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 import openai
-from langchain.agents import load_tools,initialize_agent,AgentType,create_react_agent
+from langchain.agents import initialize_agent,AgentType,create_react_agent
+from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage
 from langchain.embeddings import OpenAIEmbeddings
