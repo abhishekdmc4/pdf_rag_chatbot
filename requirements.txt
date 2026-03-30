@@ -8,3 +8,4 @@ wikipedia
 tiktoken
 faiss-cpu
 pypdf
+langchain-core
