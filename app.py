@@ -17,13 +17,12 @@ from langchain_community.agent_toolkits.load_tools import load_tools
 ##from langchain.chat_models import ChatOpenAI
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS  
-from langchain.document_loaders import PyPDFLoader,TextLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
-
-# Getting and setting Open AI API Key - This is required to use OpenAI model
 with open("keyfile.txt") as f:
     key = f.read().strip()
 os.environ["OPENAI_API_KEY"] = key
