@@ -16,7 +16,6 @@ from langchain_classic.agents import initialize_agent,AgentType,create_react_age
 from langchain_community.agent_toolkits.load_tools import load_tools
 ##from langchain.chat_models import ChatOpenAI
 from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader,TextLoader
