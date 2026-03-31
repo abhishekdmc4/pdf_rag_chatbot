@@ -7,8 +7,10 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 # These specific imports fix the "ModuleNotFoundError"
-from langchain.chains import create_retrieval_chain
+# Import from specific submodules
+from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+
 
 # --- 1. API Configuration ---
 if "HF_TOKEN" in st.secrets:
