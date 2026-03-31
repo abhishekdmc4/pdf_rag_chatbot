@@ -18,7 +18,7 @@ else:
 
 # --- 2. Model Initialization ---
 # LLM (The brain that answers) - Still uses Gemini Free Tier
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
 
 # EMBEDDINGS (The eyes that read the PDF) - HuggingFace (FREE, NO KEY, NO LIMITS)
 @st.cache_resource # Cache this so it doesn't reload every time
