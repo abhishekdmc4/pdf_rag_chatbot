@@ -25,7 +25,7 @@ from langchain_classic.chains import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 
 
-
+openAI_key = st.secrets["openAI_key"]
 os.environ["OPENAI_API_KEY"] = openAI_key
 
 # Defining LLM Model and Splitter
