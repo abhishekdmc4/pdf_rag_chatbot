@@ -36,11 +36,11 @@ text_splitter = RecursiveCharacterTextSplitter()
 st.title("Smart ChatBot : Ask Questions from PDF Documents🤖")
 
 st.markdown(
-    "[💻 View Source on GitHub](https://github.com/siddharthsingh5010/pdf_rag_chatbot)", 
+    "[💻 View Source on GitHub](https://github.com/abhishekdmc4/pdf_rag_chatbot)", 
     unsafe_allow_html=True
 )
 st.markdown(
-    "[Owner : Siddharth Singh](https://www.nomadicsid.com)", 
+    "[Owner : Abhishek Jain](<insert portfolio link>)", 
     unsafe_allow_html=True
 )
 # File upload widget
