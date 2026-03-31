@@ -1,86 +1,81 @@
-### Description ###
-# This is a simple Streamlit ChatBot app which is powered by OpenAI Model along with LangChain, RAG
-# In this user can upload any text PDF file and can ask chatbot questions regarding content of PDF in natural language
-####
-
-# Importing Libraries
 import streamlit as st
 import os
-import time
-## from langchain.llms import OpenAI
-from langchain_community.llms import OpenAI
-##from langchain.prompts import PromptTemplate, ChatPromptTemplate
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
-import openai
-from langchain_classic.agents import initialize_agent,AgentType,create_react_agent
-from langchain_community.agent_toolkits.load_tools import load_tools
-##from langchain.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_classic.chains import create_retrieval_chain
-from langchain_classic.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains import create_retrieval_chain
 
+# --- 1. API Configuration ---
+# Make sure to add "GOOGLE_API_KEY" in your Streamlit Secrets!
+if "GOOGLE_API_KEY" in st.secrets:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+else:
+    st.error("Please add your GOOGLE_API_KEY to Streamlit Secrets.")
+    st.stop()
 
-openAI_key = st.secrets["openAI_key"]
-os.environ["OPENAI_API_KEY"] = openAI_key
+# --- 2. Model Initialization ---
+# Gemini-1.5-Flash is fast and free
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
-# Defining LLM Model and Splitter
-llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
-text_splitter = RecursiveCharacterTextSplitter()
+# --- 3. UI Setup ---
+st.title("Smart ChatBot: Ask Questions from PDF Documents 🤖")
+st.markdown("[💻 View Source on GitHub](https://github.com)")
 
-# Title of the app
-st.title("Smart ChatBot : Ask Questions from PDF Documents🤖")
+uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"])
 
-st.markdown(
-    "[💻 View Source on GitHub](https://github.com/abhishekdmc4/pdf_rag_chatbot)", 
-    unsafe_allow_html=True
-)
-st.markdown(
-    "[Owner : Abhishek Jain](<insert portfolio link>)", 
-    unsafe_allow_html=True
-)
-# File upload widget
-uploaded_file = st.file_uploader("Choose a file", type=["pdf"])
-
-# Display information about the uploaded file
 if uploaded_file is not None:
-    # To read file as bytes
-    file_bytes = uploaded_file.read()
-    st.write(f"Uploaded file: {uploaded_file.name}")
-    st.write(f"File type: {uploaded_file.type}")
-    # Saving file to disk
-    save_path = os.path.join(os.getcwd(), uploaded_file.name)
-    with open(save_path, "wb") as f:
+    # Save file temporarily to read it
+    temp_file_path = os.path.join(os.getcwd(), uploaded_file.name)
+    with open(temp_file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    # Show chat box after file upload
-    st.subheader("LLM and RAG Powered ChatBot")
-    user_input = st.text_input("You: ", "Type your message here...")
+    st.success(f"File '{uploaded_file.name}' uploaded successfully!")
 
-    # document loader
-    loader = PyPDFLoader(f"{uploaded_file.name}")
-    document = loader.load()
-    documents = text_splitter.split_documents(document)
-    embeddings = OpenAIEmbeddings()
-    vector = FAISS.from_documents(documents, embeddings)
-    prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+    # --- 4. RAG Logic ---
+    with st.spinner("Processing PDF..."):
+        # Load and Split Document
+        loader = PyPDFLoader(temp_file_path)
+        document = loader.load()
+        documents = text_splitter.split_documents(document)
 
-<context>
-{context}
-</context>
+        # Create Vector Database
+        vector = FAISS.from_documents(documents, embeddings)
+        retriever = vector.as_retriever()
 
-Question: {input}""")
+        # Define the Prompt
+        prompt = ChatPromptTemplate.from_template("""
+        Answer the following question based only on the provided context.
+        If the answer is not in the context, say "I cannot find the answer in the document."
+        
+        <context>
+        {context}
+        </context>
 
-    document_chain = create_stuff_documents_chain(llm, prompt)
-    retriever = vector.as_retriever()
-    retrieval_chain = create_retrieval_chain(retriever, document_chain)   # document chain being part of the retrieval Chain
-    if user_input!='Type your message here...':
-      response = retrieval_chain.invoke({"context": "You are an AI assistant who need to examine content of document and provide concise answers",
-                                   "input": user_input})
-      st.text_area("AI : ", value=response['answer'], height=200)
+        Question: {input}
+        """)
+
+        # Create Chains
+        document_chain = create_stuff_documents_chain(llm, prompt)
+        retrieval_chain = create_retrieval_chain(retriever, document_chain)
+
+    # --- 5. Chat Interface ---
+    st.subheader("Ask a Question")
+    user_input = st.text_input("Query:", placeholder="e.g., What is the main topic of this document?")
+
+    if user_input:
+        with st.spinner("Gemini is thinking..."):
+            response = retrieval_chain.invoke({"input": user_input})
+            st.markdown("### AI Response:")
+            st.write(response['answer'])
+    
+    # Cleanup: remove the temp file
+    if os.path.exists(temp_file_path):
+        os.remove(temp_file_path)
+
 else:
-    st.write("No file uploaded yet.")
+    st.info("Please upload a PDF file to start chatting.")
