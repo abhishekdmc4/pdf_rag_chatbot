@@ -24,10 +24,8 @@ else:
 # --- 2. Model Initialization ---
 @st.cache_resource
 def load_llm():
-    # repo_id: The ID of the model on Hugging Face Hub
-    # "HuggingFaceH4/zephyr-7b-beta" is a great free chat model
-    # "mistralai/Mistral-7B-Instruct-v0.2" is another good option
-    repo_id = "HuggingFaceH4/zephyr-7b-beta"
+    # "mistralai/Mistral-7B-Instruct-v0.2" is the most reliable free model currently
+    repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
     
     llm = HuggingFaceEndpoint(
         repo_id=repo_id,
@@ -37,6 +35,7 @@ def load_llm():
         repetition_penalty=1.03,
     )
     return ChatHuggingFace(llm=llm)
+
 
 @st.cache_resource
 def load_embeddings():
