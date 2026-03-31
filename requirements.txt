@@ -13,3 +13,8 @@ langchain>=0.2.0
 langchain-openai
 langchain-core
 langchain_classic
+langchain-google-genai
+langchain-core
+langchain-text-splitters
+
+
