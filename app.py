@@ -6,11 +6,10 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-# These specific imports fix the "ModuleNotFoundError"
-# Import from specific submodules
+
+# --- FIXED IMPORTS FOR LANGCHAIN 0.3 ---
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-
 
 # --- 1. API Configuration ---
 if "HF_TOKEN" in st.secrets:
@@ -22,8 +21,7 @@ else:
 # --- 2. Model Initialization ---
 @st.cache_resource
 def load_llm():
-    # "microsoft/Phi-3-mini-4k-instruct" is currently the most reliable FREE model
-    # Backup option if this fails: "google/gemma-1.1-2b-it"
+    # "microsoft/Phi-3-mini-4k-instruct" is a reliable free model
     repo_id = "microsoft/Phi-3-mini-4k-instruct"
     
     try:
@@ -41,10 +39,10 @@ def load_llm():
 
 @st.cache_resource
 def load_embeddings():
-    # Runs locally (CPU) - Always free, always works
+    # Runs locally (CPU) - Always free
     return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-st.title("📄 PDF ChatBot (Free Hugging Face API) 🤖")
+st.title("📄 PDF ChatBot (Free Hugging Face) 🤖")
 
 # Load models
 try:
@@ -90,7 +88,7 @@ if uploaded_file:
             res = retrieval_chain.invoke({"input": user_input})
             st.write(res['answer'])
         except Exception as e:
-            st.error(f"Generation Error (API might be busy): {e}")
+            st.error(f"Generation Error: {e}")
     
     if os.path.exists(temp_path):
         os.remove(temp_path)
