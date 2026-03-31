@@ -23,8 +23,9 @@ def load_llm():
     try:
         # Swapped to the active, upgraded Llama 3.1 model
         return ChatGroq(
-            model="llama-3.1-8b-instant", 
-            temperature=0
+            # model="llama-3.1-8b-instant", 
+            model="llama-3.1-8b-instant",
+            temperature=0.4
         )
     except Exception as e:
         st.error(f"Failed to load Groq model. Error: {e}")
