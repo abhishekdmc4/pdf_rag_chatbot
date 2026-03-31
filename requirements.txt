@@ -16,5 +16,6 @@ langchain_classic
 langchain-google-genai
 langchain-core
 langchain-text-splitters
+langchain-classic
 
 
