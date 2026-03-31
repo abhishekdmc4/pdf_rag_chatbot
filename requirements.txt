@@ -1,9 +1,10 @@
 streamlit
-langchain>=0.3.0
-langchain-huggingface
+langchain
 langchain-community
+langchain-huggingface
 langchain-core
 langchain-text-splitters
+langchain-classic
 pypdf
 faiss-cpu
 sentence-transformers
