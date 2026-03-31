@@ -26,9 +26,7 @@ from langchain_classic.chains.combine_documents import create_stuff_documents_ch
 
 
 
-with open("keyfile.txt") as f:
-    key = f.read().strip()
-os.environ["OPENAI_API_KEY"] = key
+os.environ["OPENAI_API_KEY"] = openAI_key
 
 # Defining LLM Model and Splitter
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
