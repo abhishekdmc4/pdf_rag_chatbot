@@ -21,9 +21,11 @@ else:
 @st.cache_resource
 def load_llm():
     try:
-        # Llama 3 8B is blazing fast and handles RAG beautifully
-        # Temperature 0 keeps the answers strict and factual based on the PDF
-        return ChatGroq(model="llama3-8b-8192", temperature=0)
+        # Swapped to the active, upgraded Llama 3.1 model
+        return ChatGroq(
+            model="llama-3.1-8b-instant", 
+            temperature=0
+        )
     except Exception as e:
         st.error(f"Failed to load Groq model. Error: {e}")
         st.stop()
