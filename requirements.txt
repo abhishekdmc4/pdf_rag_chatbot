@@ -9,3 +9,4 @@ pypdf
 faiss-cpu
 sentence-transformers
 huggingface_hub
+langchain>=0.3.0
