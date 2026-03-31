@@ -4,7 +4,7 @@ This is a simple **Streamlit ChatBot** app powered by **OpenAI**, **LangChain**,
 The app allows users to **upload a text-based PDF document** and ask natural language questions related to the content of the uploaded file.
 
 ---
-See Live Demo at : http://217.154.38.177:8501/ 
+See Live Demo at : <insert app link>
 ---
 
 ## 🚀 Features
@@ -56,7 +56,7 @@ pdf_rag_chatbot/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/siddharthsingh5010/pdf_rag_chatbot
+git clone https://github.com/abhishekdmc4/pdf_rag_chatbot
 cd pdf_rag_chatbot
 ```
 
