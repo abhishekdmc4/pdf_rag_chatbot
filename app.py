@@ -1,12 +1,13 @@
 import streamlit as st
 import os
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_classic.chains import create_retrieval_chain
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+
 
 # --- 1. API Configuration ---
 # Make sure to add "GOOGLE_API_KEY" in your Streamlit Secrets!
@@ -19,7 +20,11 @@ else:
 # --- 2. Model Initialization ---
 # Gemini-1.5-Flash is fast and free
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/text-embedding-004", 
+    task_type="retrieval_document",
+    google_api_key=st.secrets["GOOGLE_API_KEY"] # Pass explicitly to avoid env errors
+)
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 
 # --- 3. UI Setup ---
