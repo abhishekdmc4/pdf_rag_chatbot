@@ -21,8 +21,8 @@ else:
 # --- 2. Model Initialization ---
 @st.cache_resource
 def load_llm():
-    # "microsoft/Phi-3-mini-4k-instruct" is a reliable free model
-    repo_id = "microsoft/Phi-3-mini-4k-instruct"
+    # --- SWAPPED TO A RELIABLE FREE MODEL ---
+    repo_id = "HuggingFaceH4/zephyr-7b-beta"
     
     try:
         llm = HuggingFaceEndpoint(
