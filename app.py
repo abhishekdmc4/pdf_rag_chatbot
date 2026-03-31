@@ -36,7 +36,7 @@ def load_embeddings():
     # Runs locally (CPU) - Always free
     return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-st.title("📄 PDF ChatBot (Powered by Groq ⚡)")
+st.title("Smart ChatBot : Ask Questions from PDF Documents🤖")
 
 # Load models
 try:
@@ -46,6 +46,15 @@ try:
 except Exception as e:
     st.error(f"System Error: {e}")
     st.stop()
+
+st.markdown(
+    "[💻 View Source on GitHub](https://github.com/abhishekdmc4/pdf_rag_chatbot)", 
+    unsafe_allow_html=True
+)
+st.markdown(
+    "[Owner : Abhishek Jain](https://abhishekdmc4.github.io/)", 
+    unsafe_allow_html=True
+)
 
 # --- 3. File Upload & State Management ---
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
