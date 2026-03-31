@@ -21,8 +21,8 @@ else:
 # --- 2. Model Initialization ---
 @st.cache_resource
 def load_llm():
-    # --- SWAPPED TO A RELIABLE FREE MODEL ---
-    repo_id = "HuggingFaceH4/zephyr-7b-beta"
+    # --- SWAPPED TO A GUARANTEED NATIVE FREE MODEL ---
+    repo_id = "Qwen/Qwen2.5-1.5B-Instruct"
     
     try:
         llm = HuggingFaceEndpoint(
