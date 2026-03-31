@@ -1,11 +1,8 @@
-streamlit
-langchain
-langchain-community
+langchain>=0.3.0
 langchain-huggingface
-langchain-core
-langchain-text-splitters
-pypdf
+langchain-community
 faiss-cpu
+pypdf
 sentence-transformers
 huggingface_hub
 torch
